@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: 69-s1-db
+    ports:
+      - 54327:5432
+    environment:
+      - POSTGRES_PASSWORD=tonkla2548
+      - POSTGRES_USER=sanchai
+      - POSTGRES_DB=sanchai
+    volumes:
+      - ./data-postgres:/var/lib/postgresql/data
+
+  admin:
+    image: dpage/pgadmin4
+    container_name: 69-s1-admin
+    ports:
+      - 8082:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=sanchai@example.com
+      - PGADMIN_DEFAULT_PASSWORD=tonkla2548
+    volumes:
+      - ./data-pgadmin:/var/lib/pgadmin
