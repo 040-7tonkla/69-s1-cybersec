@@ -1,5 +1,5 @@
 ### 2.1 Login
-POST http://localhost:9192/api/auth/local
+POST http://localhost:9091/api/auth/local
 Content-Type: application/json
 
 {
@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ### 2.2 Register
-POST http://localhost:9192/api/auth/local/register
+POST http://localhost:9091/api/auth/local/register
 Content-Type: application/json
 
 {
@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 ### 2.3 Forgot Password
-POST http://localhost:9192/api/auth/forgot-password
+POST http://localhost:9091/api/auth/forgot-password
 Content-Type: application/json
 
 {
@@ -26,7 +26,7 @@ Content-Type: application/json
 }
 
 ### 2.3.1 Reset Password (ใช้ token จาก email)
-POST http://localhost:9192/api/auth/reset-password
+POST http://localhost:9091/api/auth/reset-password
 Content-Type: application/json
 
 {
@@ -36,5 +36,5 @@ Content-Type: application/json
 }
 
 ### 2.4 Profile
-GET http://localhost:9192/api/users/me
+GET http://localhost:9091/api/users/me
 Authorization: Bearer <user-jwt-token>
