@@ -20,8 +20,8 @@ POST http://localhost:9091/admin/login
 Content-Type: application/json
 
 {
-    "email": "sanchai-t@rmutp.ac.th",
-    "password": "Tonkla2548",
+    "email": "{{admin_email}}",
+    "password": "{{admin_password}}",
     "rememberMe": false
 }
 
@@ -33,14 +33,14 @@ Content-Type: application/json
     "email": "{{admin_email}}"
 }
 
-### 1.3.1 Reset Password (ใช้ token จาก email)
+### 1.3.1 Reset Password (ใช้ code จาก email ที่ mailpit จับได้)
 POST http://localhost:9091/admin/reset-password
 Content-Type: application/json
 
 {
     "password": "Tonkla2548",
-    "passwordConfirmation": "tonkla2548",
-    "code": "<token-from-email>"
+    "passwordConfirmation": "Tonkla2548",
+    "code": "<code-from-email>"
 }
 
 ### 1.4 Profile
@@ -75,14 +75,14 @@ Content-Type: application/json
     "email": "{{user_email}}"
 }
 
-### 2.3.1 Reset Password (ใช้ token จาก email)
+### 2.3.1 Reset Password (ใช้ code จาก email ที่ mailpit จับได้)
 POST http://localhost:9091/api/auth/reset-password
 Content-Type: application/json
 
 {
     "password": "User@1234",
     "passwordConfirmation": "User@1234",
-    "code": "<token-from-email>"
+    "code": "<code-from-email>"
 }
 
 ### 2.4 Profile
