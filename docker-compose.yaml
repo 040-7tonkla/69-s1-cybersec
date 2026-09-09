@@ -1,9 +1,8 @@
-﻿version: '3.8'
-
-services:
+﻿services:
   db:
     image: postgres:16-alpine
     container_name: 69-s1-db
+    restart: unless-stopped
     ports:
       - "54327:5432"
     environment:
@@ -12,14 +11,42 @@ services:
       POSTGRES_DB: sanchai
     volumes:
       - ./data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sanchai -d sanchai"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   admin:
     image: dpage/pgadmin4
     container_name: 69-s1-admin
+    restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: sanchai-t@rmutp.ac.th
       PGADMIN_DEFAULT_PASSWORD: tonkla2548
     ports:
       - "8081:80"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+
+  app:
+    image: prawee/strapi
+    container_name: 69-s1-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "9091:1337"
+    environment:
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: db
+      DATABASE_PORT: "5432"
+      DATABASE_NAME: sanchai
+      DATABASE_USERNAME: sanchai
+      DATABASE_PASSWORD: tonkla2548
+      DATABASE_SSL: "false"
+      NODE_ENV: development
+    volumes:
+      - ./app:/opt/app
