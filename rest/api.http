@@ -1,6 +1,7 @@
 @admin_email = {{$dotenv ADMIN_EMAIL}}
 @admin_password = {{$dotenv ADMIN_PASSWORD}}
 
+### 1. Admin
 ### 1.1 Login
 POST http://localhost:9091/admin/login
 Content-Type: application/json
@@ -43,3 +44,45 @@ Content-Type: application/json
 ### 1.4 Profile
 GET http://localhost:9091/admin/users/me
 Authorization: Bearer <admin-jwt-token>
+
+### 2. User
+### 2.1 Login
+POST http://localhost:9091/api/auth/local
+Content-Type: application/json
+
+{
+    "identifier": "",
+    "password": ""
+}
+
+### 2.2 Register
+POST http://localhost:9091/api/auth/local/register
+Content-Type: application/json
+
+{
+    "username": "",
+    "email": "",
+    "password": ""
+}
+
+### 2.3 Forgot Password
+POST http://localhost:9091/api/auth/forgot-password
+Content-Type: application/json
+
+{
+    "email": ""
+}
+
+### 2.3.1 Reset Password (ใช้ token จาก email)
+POST http://localhost:9091/api/auth/reset-password
+Content-Type: application/json
+
+{
+    "password": "",
+    "passwordConfirmation": "",
+    "code": ""
+}
+
+### 2.4 Profile
+GET http://localhost:9091/api/users/me
+Authorization: Bearer <user-jwt-token>
