@@ -1,0 +1,88 @@
+@admin_email = {{$dotenv ADMIN_EMAIL}}
+@admin_password = {{$dotenv ADMIN_PASSWORD}}
+
+### 1. Admin
+### 1.1 Login
+POST http://localhost:{{APP_PORT}}/admin/login
+Content-Type: application/json
+
+{
+    "email": "{{admin_email}}",
+    "password": "{{admin_password}}",
+    "rememberMe": false
+}
+
+### 1.2 Register (admin) one time for first time to create admin account
+POST http://localhost:{{APP_PORT}}/admin/register-admin
+Content-Type: application/json
+
+{
+    "firstname": "<firstname>",
+    "lastname": "<lastname>",
+    "email": "<email>",
+    "password": "<password>"
+}
+
+### 1.3 Forgot Password
+POST http://localhost:{{APP_PORT}}/admin/forgot-password
+Content-Type: application/json
+
+{
+    "email": "<email>"
+}
+
+### 1.3.1 Reset Password (ใช้ token จาก email)
+POST http://localhost:{{APP_PORT}}/admin/reset-password
+Content-Type: application/json
+
+{
+    "password": "<new-password>",
+    "passwordConfirmation": "<new-password>",
+    "code": "<token-from-email>"
+}
+
+### 1.4 Profile
+GET http://localhost:{{APP_PORT}}/admin/users/me
+Authorization: Bearer <admin-jwt-token>
+
+### 2. User
+### 2.1 Login
+POST http://localhost:{{APP_PORT}}/api/auth/local
+Content-Type: application/json
+
+{
+    "identifier": "<email-or-username>",
+    "password": "<password>"
+}
+
+### 2.2 Register
+POST http://localhost:{{APP_PORT}}/api/auth/local/register
+Content-Type: application/json
+
+{
+    "username": "<username>",
+    "email": "<email>",
+    "password": "<password>"
+}
+
+### 2.3 Forgot Password
+POST http://localhost:{{APP_PORT}}/api/auth/forgot-password
+Content-Type: application/json
+
+{
+    "email": "<email>"
+}
+
+### 2.3.1 Reset Password (ใช้ token จาก email)
+POST http://localhost:{{APP_PORT}}/api/auth/reset-password
+Content-Type: application/json
+
+{
+    "password": "<new-password>",
+    "passwordConfirmation": "<new-password>",
+    "code": "<token-from-email>"
+}
+
+### 2.4 Profile
+GET http://localhost:{{APP_PORT}}/api/users/me
+Authorization: Bearer <user-jwt-token>
