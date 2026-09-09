@@ -1,5 +1,5 @@
 @admin_email = sanchai-t@rmutp.ac.th
-@admin_password = tonkla2548
+@admin_password = Tonkla2548
 @user_email = user01@example.com
 @user_password = User@1234
 
@@ -12,7 +12,7 @@ Content-Type: application/json
     "firstname": "Sanchai",
     "lastname": "Tangjai",
     "email": "sanchai-t@rmutp.ac.th",
-    "password": "tonkla2548"
+    "password": "Tonkla2548"
 }
 
 ### 1.2 Login
@@ -20,8 +20,8 @@ POST http://localhost:9091/admin/login
 Content-Type: application/json
 
 {
-    "email": "{{admin_email}}",
-    "password": "{{admin_password}}",
+    "email": "sanchai-t@rmutp.ac.th",
+    "password": "Tonkla2548",
     "rememberMe": false
 }
 
@@ -38,7 +38,7 @@ POST http://localhost:9091/admin/reset-password
 Content-Type: application/json
 
 {
-    "password": "tonkla2548",
+    "password": "Tonkla2548",
     "passwordConfirmation": "tonkla2548",
     "code": "<token-from-email>"
 }
