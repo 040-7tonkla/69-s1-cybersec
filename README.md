@@ -1,6 +1,6 @@
 ﻿# Cyber Security
 
-Strapi v4 (REST API) + PostgreSQL + pgAdmin + Mailpit — รันด้วย Docker Compose ใช้ทำการบ้านวิชา Cyber Security
+Strapi v4 (REST API) + PostgreSQL + pgAdmin — รันด้วย Docker Compose ใช้ทำการบ้านวิชา Cyber Security
 
 ## Stack
 
@@ -9,7 +9,8 @@ Strapi v4 (REST API) + PostgreSQL + pgAdmin + Mailpit — รันด้วย 
 | Strapi   | 69-s1-app  | http://localhost:9091 | REST API + Admin Panel |
 | Postgres | 69-s1-db   | 54327          | ฐานข้อมูล                       |
 | pgAdmin  | 69-s1-admin| http://localhost:8081 | จัดการฐานข้อมูล              |
-| Mailpit  | 69-s1-mailpit | UI http://localhost:8025 | จับ SMTP ดู email forgot-password |
+
+Email forgot-password ส่งผ่าน SMTP จริง (**Gmail**: `smtp.gmail.com:465` TLS) ไปที่ `real922548@gmail.com`
 
 ## เริ่มใช้งาน
 
@@ -25,20 +26,21 @@ User ใช้ `POST /api/auth/local` login
 1. Register user
 2. Login user (ได้ JWT)
 3. Login admin (ได้ JWT)
-4. Forgot Password User -> email เข้า Mailpit
+4. Forgot Password User -> email เข้า Inbox Gmail จริง
 5. Reset Password User (code ใช้ครั้งเดียว)
-6. Forgot Password Admin -> email เข้า Mailpit
+6. Forgot Password Admin -> email เข้า Inbox Gmail จริง
 7. Reset Password Admin (token ใช้ครั้งเดียว)
 8. Profile user / admin
 9-12. CRUD content types: students / teachers / subjects / mappings
 
 > Reset-password token เป็น **single-use** ถ้ายิงขั้น 5/7 แล้วได้ 400
-> ให้ไปรันขั้น 4/6 ใหม่ แล้วคัด token ล่าสุดจาก Mailpit มาวางในขั้น 5/7
+> ให้ไปรันขั้น 4/6 ใหม่ token ล่าสุดจะเข้า inbox ของ `real922548@gmail.com`
+> (token ใน DB (`reset_password_token`) คือค่าที่ email ส่งไป เอามาใส่ขั้น 5/7 ได้)
 
 ## Forgot / Reset Password Flow (Single-Use Token)
 
 ```
-POST /api/auth/forgot-password {"email"}          -> สร้าง token สุ่ม 64 bytes -> ส่ง email + ?code=<token> (Mailpit)
+POST /api/auth/forgot-password {"email"}          -> สร้าง token สุ่ม 64 bytes -> ส่ง email + ?code=<token> (SMTP Gmail จริง)
 POST /api/auth/reset-password  {"code","password","passwordConfirmation"} -> รีเซ็ต + ล้าง token (single-use)
 POST /admin/forgot-password    {"email"}          -> เช่นเดียวกับ user (admin_users)
 POST /admin/reset-password     {"resetPasswordToken","password"}            -> เช่นเดียวกับ user (admin_users)

@@ -1,15 +1,19 @@
 module.exports = ({ env }) => ({
   email: {
     config: {
-      provider: 'sendmail',
+      provider: 'nodemailer',
       providerOptions: {
-        silent: true,
-        devHost: env('SMTP_HOST', 'mailpit'),
-        devPort: env.int('SMTP_PORT', 1025),
+        host: env('EMAIL_SMTP_HOST', 'smtp.gmail.com'),
+        port: env.int('EMAIL_SMTP_PORT', 465),
+        secure: env.bool('EMAIL_SMTP_SECURE', true),
+        auth: {
+          user: env('EMAIL_SMTP_USER'),
+          pass: env('EMAIL_SMTP_PASS'),
+        },
       },
       settings: {
-        defaultFrom: env('EMAIL_DEFAULT_FROM', 'Strapi <admin@example.com>'),
-        defaultReplyTo: env('EMAIL_DEFAULT_REPLY_TO', 'Strapi <admin@example.com>'),
+        defaultFrom: env('EMAIL_DEFAULT_FROM', 'Strapi <real922548@gmail.com>'),
+        defaultReplyTo: env('EMAIL_DEFAULT_REPLY_TO', 'Strapi <real922548@gmail.com>'),
       },
     },
   },

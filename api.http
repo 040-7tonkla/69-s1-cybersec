@@ -1,10 +1,10 @@
-### 1. Register / Signup (ทำครั้งแรกเท่านั้น)
+﻿### 1. Register / Signup (à¸—à¸³à¸„à¸£à¸±à¹‰à¸‡à¹à¸£à¸à¹€à¸—à¹ˆà¸²à¸™à¸±à¹‰à¸™)
 POST http://localhost:9091/api/auth/local/register
 Content-Type: application/json
 
 {
   "username": "sanchai",
-  "email": "sanchai-t@rmutp.ac.th",
+  "email": "real922548@gmail.com",
   "password": "Tonkla2548"
 }
 
@@ -13,7 +13,7 @@ POST http://localhost:9091/api/auth/local
 Content-Type: application/json
 
 {
-  "identifier": "sanchai-t@rmutp.ac.th",
+  "identifier": "real922548@gmail.com",
   "password": "Tonkla2548"
 }
 
@@ -22,54 +22,54 @@ POST http://localhost:9091/admin/login
 Content-Type: application/json
 
 {
-  "email": "sanchai-t@rmutp.ac.th",
+  "email": "real922548@gmail.com",
   "password": "Tonkla2548",
   "rememberMe": false
 }
 
-### 4. Forgot Password User (สร้าง token -> ส่งเข้า email จริง)
-###    Strapi หา user จาก email ใน up_users
+### 4. Forgot Password User (à¸ªà¸£à¹‰à¸²à¸‡ token -> à¸ªà¹ˆà¸‡à¹€à¸‚à¹‰à¸² email à¸ˆà¸£à¸´à¸‡)
+###    Strapi à¸«à¸² user à¸ˆà¸²à¸ email à¹ƒà¸™ up_users
 POST http://localhost:9091/api/auth/forgot-password
 Content-Type: application/json
 
 {
-  "email": "sanchai-t@rmutp.ac.th"
+  "email": "real922548@gmail.com"
 }
 
-### 5. Reset Password User (ใช้ token ใหม่ล่าสุดเท่านั้น!)
+### 5. Reset Password User (à¹ƒà¸Šà¹‰ token à¹ƒà¸«à¸¡à¹ˆà¸¥à¹ˆà¸²à¸ªà¸¸à¸”à¹€à¸—à¹ˆà¸²à¸™à¸±à¹‰à¸™!)
 ###    field: code + password + passwordConfirmation
 POST http://localhost:9091/api/auth/reset-password
 Content-Type: application/json
 
 {
-  "code": "66ebf664fd573dc268f10de8f78f2e12cce17396394b964e2499ea3a0888b65c8be755330838dd7a322bbcf523f1467d01839fd6cb82e091f75e179d168eabd9",
+  "code": "6f96f7a047e221f9f0c7cb9b678adc17c674978dd12060c1aeef45138e7b305d5d4df381a1492c566ec6fd22499c1f51ed39c9359c9ee9ee9bc66050dcb0295f",
   "password": "Tonkla2548",
   "passwordConfirmation": "Tonkla2548"
 }
 
-### 5.1 ทดสอบ single-use: ยิงขั้น 5 ซ้ำด้วย code เดิม -> ได้ 400
+### 5.1 à¸—à¸”à¸ªà¸­à¸š single-use: à¸¢à¸´à¸‡à¸‚à¸±à¹‰à¸™ 5 à¸‹à¹‰à¸³à¸”à¹‰à¸§à¸¢ code à¹€à¸”à¸´à¸¡ -> à¹„à¸”à¹‰ 400
 
-### 6. Forgot Password Admin (สร้าง token -> ส่งเข้า email จริง)
-###    Strapi หา admin จาก email ใน admin_users
+### 6. Forgot Password Admin (à¸ªà¸£à¹‰à¸²à¸‡ token -> à¸ªà¹ˆà¸‡à¹€à¸‚à¹‰à¸² email à¸ˆà¸£à¸´à¸‡)
+###    Strapi à¸«à¸² admin à¸ˆà¸²à¸ email à¹ƒà¸™ admin_users
 POST http://localhost:9091/admin/forgot-password
 Content-Type: application/json
 
 {
-  "email": "sanchai-t@rmutp.ac.th"
+  "email": "real922548@gmail.com"
 }
 
-### 7. Reset Password Admin (ใช้ token ใหม่ล่าสุดเท่านั้น!)
-###    field: resetPasswordToken + password (ไม่ต้องมี passwordConfirmation!)
+### 7. Reset Password Admin (à¹ƒà¸Šà¹‰ token à¹ƒà¸«à¸¡à¹ˆà¸¥à¹ˆà¸²à¸ªà¸¸à¸”à¹€à¸—à¹ˆà¸²à¸™à¸±à¹‰à¸™!)
+###    field: resetPasswordToken + password (à¹„à¸¡à¹ˆà¸•à¹‰à¸­à¸‡à¸¡à¸µ passwordConfirmation!)
 POST http://localhost:9091/admin/reset-password
 Content-Type: application/json
 
 {
-  "resetPasswordToken": "2348c4d7f03ec6b5f739ab081f0cbbca6a2f5f61",
+  "resetPasswordToken": "c33532b12d2288479707145dc047102ac8d9b982",
   "password": "Tonkla2548"
 }
 
-### 7.1 ทดสอบ single-use: ยิงขั้น 7 ซ้ำด้วย token เดิม -> ได้ 400
+### 7.1 à¸—à¸”à¸ªà¸­à¸š single-use: à¸¢à¸´à¸‡à¸‚à¸±à¹‰à¸™ 7 à¸‹à¹‰à¸³à¸”à¹‰à¸§à¸¢ token à¹€à¸”à¸´à¸¡ -> à¹„à¸”à¹‰ 400
 
-### 8. Profile (ใส่ JWT ใหม่จากขั้น 2)
+### 8. Profile (à¹ƒà¸ªà¹ˆ JWT à¹ƒà¸«à¸¡à¹ˆà¸ˆà¸²à¸à¸‚à¸±à¹‰à¸™ 2)
 GET http://localhost:9091/api/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzg5NDk2MzY0LCJleHAiOjE3OTIwODgzNjR9.rw4V9U0rRsfFfm2YQnf1KoLrMhY5yH7Ag0--Ab7Ltkg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzg5NTAwOTU3LCJleHAiOjE3OTIwOTI5NTd9.A_ZjJVDU_jfbYG5K5qAxWUEP-eGHZp9qXWiPrjZ0eTo

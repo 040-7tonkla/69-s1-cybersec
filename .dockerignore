@@ -1,0 +1,9 @@
+.git/
+data/
+data-*/
+app/
+*.md
+install.ps1
+api.http
+api.http.simple
+env.simple

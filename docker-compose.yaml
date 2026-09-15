@@ -39,7 +39,10 @@ services:
       - "1025:1025"
 
   app:
-    image: prawee/strapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: 69-s1-app
     container_name: 69-s1-app
     restart: unless-stopped
     depends_on:
@@ -56,7 +59,12 @@ services:
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       DATABASE_SSL: "false"
       NODE_ENV: development
-      SMTP_HOST: mailpit
-      SMTP_PORT: "1025"
+      EMAIL_SMTP_HOST: ${EMAIL_SMTP_HOST}
+      EMAIL_SMTP_PORT: ${EMAIL_SMTP_PORT}
+      EMAIL_SMTP_SECURE: ${EMAIL_SMTP_SECURE}
+      EMAIL_SMTP_USER: ${EMAIL_SMTP_USER}
+      EMAIL_SMTP_PASS: ${EMAIL_SMTP_PASS}
+      EMAIL_DEFAULT_FROM: ${EMAIL_DEFAULT_FROM}
+      EMAIL_DEFAULT_REPLY_TO: ${EMAIL_DEFAULT_REPLY_TO}
     volumes:
       - ./config/plugins.js:/opt/app/config/plugins.js:ro
