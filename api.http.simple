@@ -20,7 +20,8 @@ Content-Type: application/json
     "firstname": "<firstname>",
     "lastname": "<lastname>",
     "email": "<email>",
-    "password": "<password>"
+    "password": "<password>",
+    "passwordConfirmation": "<password>"
 }
 
 ### 1.3 Forgot Password
@@ -31,14 +32,13 @@ Content-Type: application/json
     "email": "<email>"
 }
 
-### 1.3.1 Reset Password (ใช้ token จาก email)
+### 1.3.1 Reset Password (ใช้ token จาก email / field: resetPasswordToken + password)
 POST http://localhost:{{APP_PORT}}/admin/reset-password
 Content-Type: application/json
 
 {
     "password": "<new-password>",
-    "passwordConfirmation": "<new-password>",
-    "code": "<token-from-email>"
+    "resetPasswordToken": "<token-from-email>"
 }
 
 ### 1.4 Profile

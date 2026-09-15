@@ -1,90 +1,75 @@
-@admin_email = sanchai-t@rmutp.ac.th
-@admin_password = Tonkla2548
-@user_email = user01@example.com
-@user_password = User@1234
-
-### 1. Admin
-### 1.1 Register (admin) one time for first time to create admin account
-POST http://localhost:9091/admin/register-admin
-Content-Type: application/json
-
-{
-    "firstname": "Sanchai",
-    "lastname": "Tangjai",
-    "email": "sanchai-t@rmutp.ac.th",
-    "password": "Tonkla2548"
-}
-
-### 1.2 Login
-POST http://localhost:9091/admin/login
-Content-Type: application/json
-
-{
-    "email": "{{admin_email}}",
-    "password": "{{admin_password}}",
-    "rememberMe": false
-}
-
-### 1.3 Forgot Password
-POST http://localhost:9091/admin/forgot-password
-Content-Type: application/json
-
-{
-    "email": "{{admin_email}}"
-}
-
-### 1.3.1 Reset Password (ใช้ code จาก email ที่ mailpit จับได้)
-POST http://localhost:9091/admin/reset-password
-Content-Type: application/json
-
-{
-    "password": "Tonkla2548",
-    "passwordConfirmation": "Tonkla2548",
-    "code": "<code-from-email>"
-}
-
-### 1.4 Profile
-GET http://localhost:9091/admin/users/me
-Authorization: Bearer <admin-jwt-token>
-
-### 2. User
-### 2.1 Register
+### 1. Register / Signup (ทำครั้งแรกเท่านั้น)
 POST http://localhost:9091/api/auth/local/register
 Content-Type: application/json
 
 {
-    "username": "user01",
-    "email": "user01@example.com",
-    "password": "User@1234"
+  "username": "sanchai",
+  "email": "sanchai-t@rmutp.ac.th",
+  "password": "Tonkla2548"
 }
 
-### 2.2 Login
+### 2. Login User
 POST http://localhost:9091/api/auth/local
 Content-Type: application/json
 
 {
-    "identifier": "{{user_email}}",
-    "password": "{{user_password}}"
+  "identifier": "sanchai-t@rmutp.ac.th",
+  "password": "Tonkla2548"
 }
 
-### 2.3 Forgot Password
+### 3. Login Admin
+POST http://localhost:9091/admin/login
+Content-Type: application/json
+
+{
+  "email": "sanchai-t@rmutp.ac.th",
+  "password": "Tonkla2548",
+  "rememberMe": false
+}
+
+### 4. Forgot Password User (สร้าง token -> ส่งเข้า email จริง)
+###    Strapi หา user จาก email ใน up_users
 POST http://localhost:9091/api/auth/forgot-password
 Content-Type: application/json
 
 {
-    "email": "{{user_email}}"
+  "email": "sanchai-t@rmutp.ac.th"
 }
 
-### 2.3.1 Reset Password (ใช้ code จาก email ที่ mailpit จับได้)
+### 5. Reset Password User (ใช้ token ใหม่ล่าสุดเท่านั้น!)
+###    field: code + password + passwordConfirmation
 POST http://localhost:9091/api/auth/reset-password
 Content-Type: application/json
 
 {
-    "password": "User@1234",
-    "passwordConfirmation": "User@1234",
-    "code": "<code-from-email>"
+  "code": "66ebf664fd573dc268f10de8f78f2e12cce17396394b964e2499ea3a0888b65c8be755330838dd7a322bbcf523f1467d01839fd6cb82e091f75e179d168eabd9",
+  "password": "Tonkla2548",
+  "passwordConfirmation": "Tonkla2548"
 }
 
-### 2.4 Profile
+### 5.1 ทดสอบ single-use: ยิงขั้น 5 ซ้ำด้วย code เดิม -> ได้ 400
+
+### 6. Forgot Password Admin (สร้าง token -> ส่งเข้า email จริง)
+###    Strapi หา admin จาก email ใน admin_users
+POST http://localhost:9091/admin/forgot-password
+Content-Type: application/json
+
+{
+  "email": "sanchai-t@rmutp.ac.th"
+}
+
+### 7. Reset Password Admin (ใช้ token ใหม่ล่าสุดเท่านั้น!)
+###    field: resetPasswordToken + password (ไม่ต้องมี passwordConfirmation!)
+POST http://localhost:9091/admin/reset-password
+Content-Type: application/json
+
+{
+  "resetPasswordToken": "2348c4d7f03ec6b5f739ab081f0cbbca6a2f5f61",
+  "password": "Tonkla2548"
+}
+
+### 7.1 ทดสอบ single-use: ยิงขั้น 7 ซ้ำด้วย token เดิม -> ได้ 400
+
+### 8. Profile (ใส่ JWT ใหม่จากขั้น 2)
 GET http://localhost:9091/api/users/me
-Authorization: Bearer <user-jwt-token>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzg5NDk2MzY0LCJleHAiOjE3OTIwODgzNjR9.rw4V9U0rRsfFfm2YQnf1KoLrMhY5yH7Ag0--Ab7Ltkg
