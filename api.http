@@ -1,14 +1,52 @@
-﻿### 1. Register / Signup (à¸—à¸³à¸„à¸£à¸±à¹‰à¸‡à¹à¸£à¸à¹€à¸—à¹ˆà¸²à¸™à¸±à¹‰à¸™)
-POST http://localhost:9091/api/auth/local/register
+﻿## 1. Admin
+
+### 1.1 Login
+POST http://localhost:9091/admin/login
 Content-Type: application/json
 
 {
-  "username": "sanchai",
   "email": "real922548@gmail.com",
-  "password": "Tonkla2548"
+  "password": "Tonkla25488",
+  "rememberMe": false
 }
 
-### 2. Login User
+### 1.2 Signup / Register (ได้ 200 เฉพาะตอน DB ยังไม่มี admin — Strapi block "You cannot register a new super admin")
+POST http://localhost:9091/admin/register-admin
+Content-Type: application/json
+
+{
+  "email": "real922548@gmail.com",
+  "password": "Tonkla25488",
+  "firstname": "Sanchai",
+  "lastname": "Tangjai"
+}
+
+### 1.3 Forgot Password
+POST http://localhost:9091/admin/forgot-password
+Content-Type: application/json
+
+{
+  "email": "real922548@gmail.com"
+}
+
+### 1.3.1 Reset Password
+### token ต้องตรงกับค่าใน DB (single-use / ขั้น 1.3 สุ่ม token ใหม่ทับเสมอ) — ถ้า 400 ให้รัน:
+### powershell -ExecutionPolicy Bypass -File scripts/seed-reset-tokens.ps1
+POST http://localhost:9091/admin/reset-password
+Content-Type: application/json
+
+{
+  "resetPasswordToken": "e5fc350a24aef7a8c50342e3df6b5d4bdf11b75d",
+  "password": "Tonkla25488"
+}
+
+### 1.4 Profile
+GET http://localhost:9091/admin/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzkwMDkyNTQxLCJleHAiOjE3OTI2ODQ1NDF9.fMGgOMhdmPXh66xczFEdnCgPBV39hJvH5Pf_rMBqEi0
+
+## 2. User
+
+### 2.1 Login
 POST http://localhost:9091/api/auth/local
 Content-Type: application/json
 
@@ -17,18 +55,17 @@ Content-Type: application/json
   "password": "Tonkla2548"
 }
 
-### 3. Login Admin
-POST http://localhost:9091/admin/login
+### 2.2 Signup / Register (username/email สุ่มด้วย {{$guid}} => ได้ 200 ทุกครั้ง)
+POST http://localhost:9091/api/auth/local/register
 Content-Type: application/json
 
 {
-  "email": "real922548@gmail.com",
-  "password": "Tonkla2548",
-  "rememberMe": false
+  "username": "sanchai-{{$guid}}",
+  "email": "{{$guid}}@example.com",
+  "password": "Tonkla2548"
 }
 
-### 4. Forgot Password User (à¸ªà¸£à¹‰à¸²à¸‡ token -> à¸ªà¹ˆà¸‡à¹€à¸‚à¹‰à¸² email à¸ˆà¸£à¸´à¸‡)
-###    Strapi à¸«à¸² user à¸ˆà¸²à¸ email à¹ƒà¸™ up_users
+### 2.3 Forgot Password
 POST http://localhost:9091/api/auth/forgot-password
 Content-Type: application/json
 
@@ -36,40 +73,18 @@ Content-Type: application/json
   "email": "real922548@gmail.com"
 }
 
-### 5. Reset Password User (à¹ƒà¸Šà¹‰ token à¹ƒà¸«à¸¡à¹ˆà¸¥à¹ˆà¸²à¸ªà¸¸à¸”à¹€à¸—à¹ˆà¸²à¸™à¸±à¹‰à¸™!)
-###    field: code + password + passwordConfirmation
+### 2.3.1 Reset Password
+### code ต้องตรงกับค่าใน DB (single-use / ขั้น 2.3 สุ่ม code ใหม่ทับเสมอ) — ถ้า 400 ให้รัน:
+### powershell -ExecutionPolicy Bypass -File scripts/seed-reset-tokens.ps1
 POST http://localhost:9091/api/auth/reset-password
 Content-Type: application/json
 
 {
-  "code": "6f96f7a047e221f9f0c7cb9b678adc17c674978dd12060c1aeef45138e7b305d5d4df381a1492c566ec6fd22499c1f51ed39c9359c9ee9ee9bc66050dcb0295f",
+  "code": "22952c04acca759ede1d44a45fe9ab2e8d8041f89f58706c76312c84a17ad9121dc3d11f4fd83fe48c8691931b96d1ba4f0b22b1e9cd0b87ca5a28ab07301e59",
   "password": "Tonkla2548",
   "passwordConfirmation": "Tonkla2548"
 }
 
-### 5.1 à¸—à¸”à¸ªà¸­à¸š single-use: à¸¢à¸´à¸‡à¸‚à¸±à¹‰à¸™ 5 à¸‹à¹‰à¸³à¸”à¹‰à¸§à¸¢ code à¹€à¸”à¸´à¸¡ -> à¹„à¸”à¹‰ 400
-
-### 6. Forgot Password Admin (à¸ªà¸£à¹‰à¸²à¸‡ token -> à¸ªà¹ˆà¸‡à¹€à¸‚à¹‰à¸² email à¸ˆà¸£à¸´à¸‡)
-###    Strapi à¸«à¸² admin à¸ˆà¸²à¸ email à¹ƒà¸™ admin_users
-POST http://localhost:9091/admin/forgot-password
-Content-Type: application/json
-
-{
-  "email": "real922548@gmail.com"
-}
-
-### 7. Reset Password Admin (à¹ƒà¸Šà¹‰ token à¹ƒà¸«à¸¡à¹ˆà¸¥à¹ˆà¸²à¸ªà¸¸à¸”à¹€à¸—à¹ˆà¸²à¸™à¸±à¹‰à¸™!)
-###    field: resetPasswordToken + password (à¹„à¸¡à¹ˆà¸•à¹‰à¸­à¸‡à¸¡à¸µ passwordConfirmation!)
-POST http://localhost:9091/admin/reset-password
-Content-Type: application/json
-
-{
-  "resetPasswordToken": "c33532b12d2288479707145dc047102ac8d9b982",
-  "password": "Tonkla2548"
-}
-
-### 7.1 à¸—à¸”à¸ªà¸­à¸š single-use: à¸¢à¸´à¸‡à¸‚à¸±à¹‰à¸™ 7 à¸‹à¹‰à¸³à¸”à¹‰à¸§à¸¢ token à¹€à¸”à¸´à¸¡ -> à¹„à¸”à¹‰ 400
-
-### 8. Profile (à¹ƒà¸ªà¹ˆ JWT à¹ƒà¸«à¸¡à¹ˆà¸ˆà¸²à¸à¸‚à¸±à¹‰à¸™ 2)
+### 2.4 Profile
 GET http://localhost:9091/api/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzg5NTAwOTU3LCJleHAiOjE3OTIwOTI5NTd9.A_ZjJVDU_jfbYG5K5qAxWUEP-eGHZp9qXWiPrjZ0eTo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzkwMDkyNTM1LCJleHAiOjE3OTI2ODQ1MzV9.8SFopWRCFsf17AeOtdElyO9SzRuh70D47AK8ksgmCzc
